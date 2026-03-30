@@ -1,0 +1,809 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>IBM ICE Day 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Montserrat:wght@300;400;500;600;700&family=Cinzel:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #05112a;
+    --navy-mid: #0b1f45;
+    --navy-light: #132d5e;
+    --gold: #c9a84c;
+    --gold-light: #e8c96e;
+    --gold-pale: #f5e6b8;
+    --white: #ffffff;
+    --silver: #b8c4d8;
+    --cream: #f9f4ec;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html, body {
+    width: 100%;
+    min-height: 100vh;
+    background: #030d1f;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    font-family: 'Montserrat', sans-serif;
+  }
+
+  .phone-frame {
+    width: 100%;
+    max-width: 420px;
+    min-height: 100vh;
+    position: relative;
+    overflow: hidden;
+    background: var(--navy);
+  }
+
+  /* ── Background layers ── */
+  .bg-gradient {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 80% 40% at 50% 0%, rgba(12,40,100,.9) 0%, transparent 70%),
+      radial-gradient(ellipse 60% 50% at 100% 80%, rgba(201,168,76,.07) 0%, transparent 60%),
+      linear-gradient(175deg, #05112a 0%, #030c1e 60%, #040f25 100%);
+    z-index: 0;
+  }
+
+  /* Subtle geometric lines */
+  .geo-lines {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    overflow: hidden;
+  }
+  .geo-lines svg {
+    width: 100%; height: 100%;
+    position: absolute; top: 0; left: 0;
+    opacity: .18;
+  }
+
+  /* Gold shimmer sweep */
+  .shimmer-sweep {
+    position: absolute;
+    top: 0; left: -100%;
+    width: 60%; height: 100%;
+    background: linear-gradient(105deg, transparent 30%, rgba(201,168,76,.06) 50%, transparent 70%);
+    z-index: 1;
+    animation: sweep 5s 2.5s ease-in-out infinite;
+  }
+  @keyframes sweep {
+    0%   { left: -60%; }
+    100% { left: 160%; }
+  }
+
+  /* Floating orbs */
+  .orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(60px);
+    z-index: 0;
+    animation: orbFloat var(--dur, 10s) ease-in-out infinite alternate;
+  }
+  .orb-1 { width: 200px; height: 200px; background: rgba(12,50,130,.45); top: -60px; right: -60px; --dur: 8s; }
+  .orb-2 { width: 160px; height: 160px; background: rgba(201,168,76,.1); bottom: 200px; left: -40px; --dur: 11s; }
+  .orb-3 { width: 120px; height: 120px; background: rgba(8,30,90,.6); top: 45%; right: -30px; --dur: 9s; }
+  @keyframes orbFloat {
+    from { transform: translate(0, 0) scale(1); }
+    to   { transform: translate(12px, 20px) scale(1.1); }
+  }
+
+  /* ── Content ── */
+  .content {
+    position: relative;
+    z-index: 2;
+    padding: 44px 28px 48px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+  }
+
+  /* ── Top rule ── */
+  .top-rule {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 30px;
+    opacity: 0;
+    animation: revealDown .7s .1s forwards;
+  }
+  .rule-line {
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  }
+  .rule-diamond {
+    width: 6px; height: 6px;
+    background: var(--gold);
+    transform: rotate(45deg);
+    flex-shrink: 0;
+  }
+
+  /* ── Logo block ── */
+  .logo-block {
+    text-align: center;
+    margin-bottom: 24px;
+    opacity: 0;
+    animation: revealDown .8s .25s forwards;
+  }
+  .logo-emblem {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    margin-bottom: 10px;
+  }
+  .emblem-circle {
+    width: 50px; height: 50px;
+    border-radius: 50%;
+    border: 1.5px solid rgba(201,168,76,.5);
+    background: linear-gradient(135deg, rgba(12,40,100,.8), rgba(5,17,42,.9));
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Cinzel', serif;
+    font-size: .55rem; color: var(--gold-light);
+    letter-spacing: .08em;
+    text-align: center;
+    line-height: 1.4;
+    box-shadow: inset 0 0 12px rgba(201,168,76,.1), 0 0 20px rgba(201,168,76,.12);
+  }
+  .logo-name {
+    font-family: 'Cinzel', serif;
+    font-size: 1.05rem;
+    font-weight: 600;
+    letter-spacing: .18em;
+    color: var(--white);
+  }
+  .logo-sub {
+    font-size: .58rem;
+    letter-spacing: .14em;
+    color: var(--silver);
+    margin-top: 2px;
+  }
+  .logo-deemed {
+    font-size: .52rem;
+    letter-spacing: .1em;
+    color: rgba(184,196,216,.5);
+    margin-top: 1px;
+  }
+  .badge-40 {
+    width: 44px; height: 44px;
+    border-radius: 50%;
+    border: 1.5px solid var(--gold);
+    background: radial-gradient(circle at 40% 35%, rgba(201,168,76,.2), rgba(3,13,31,.9));
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    box-shadow: 0 0 18px rgba(201,168,76,.2);
+    animation: badgePulse 3s ease-in-out infinite;
+  }
+  .badge-40 .bnum { font-family: 'Cinzel', serif; font-size: 1rem; color: var(--gold); line-height: 1; }
+  .badge-40 .blbl { font-size: .4rem; letter-spacing: .12em; color: var(--gold-light); }
+  @keyframes badgePulse {
+    0%,100% { box-shadow: 0 0 16px rgba(201,168,76,.2); }
+    50%      { box-shadow: 0 0 28px rgba(201,168,76,.4); }
+  }
+
+  .dept-name {
+    font-size: .62rem;
+    letter-spacing: .16em;
+    color: var(--gold);
+    text-transform: uppercase;
+    text-align: center;
+    line-height: 1.6;
+    opacity: 0;
+    animation: revealDown .7s .38s forwards;
+  }
+
+  /* ── Presents ── */
+  .presents {
+    font-family: 'Cormorant+Garamond', serif;
+    font-style: italic;
+    font-size: .8rem;
+    color: rgba(184,196,216,.6);
+    letter-spacing: .2em;
+    margin: 16px 0 10px;
+    opacity: 0;
+    animation: revealDown .7s .5s forwards;
+  }
+
+  /* ── Gold divider ── */
+  .gold-divider {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 85%;
+    margin: 12px auto;
+    opacity: 0;
+    animation: revealDown .6s .55s forwards;
+  }
+  .gd-line {
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold));
+  }
+  .gd-line.rev { background: linear-gradient(90deg, var(--gold), transparent); }
+  .gd-center {
+    display: flex; gap: 5px; align-items: center;
+  }
+  .gd-dot { width: 4px; height: 4px; border-radius: 50%; background: var(--gold); }
+  .gd-big  { width: 7px; height: 7px; transform: rotate(45deg); background: var(--gold); }
+
+  /* ── Main title ── */
+  .main-title {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(2.6rem, 12vw, 3.2rem);
+    font-weight: 600;
+    letter-spacing: .08em;
+    text-align: center;
+    line-height: 1.05;
+    color: transparent;
+    background: linear-gradient(160deg, var(--gold-pale) 0%, var(--gold-light) 40%, var(--gold) 70%, #a07830 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    filter: drop-shadow(0 2px 24px rgba(201,168,76,.3));
+    opacity: 0;
+    animation: revealUp 1s .65s forwards;
+    margin-bottom: 8px;
+    padding: 0 4px;
+  }
+
+  .main-subtitle {
+    font-family: 'Montserrat', sans-serif;
+    font-size: .72rem;
+    font-weight: 500;
+    letter-spacing: .38em;
+    color: var(--silver);
+    text-align: center;
+    text-transform: uppercase;
+    opacity: 0;
+    animation: revealUp .8s .85s forwards;
+    margin-bottom: 28px;
+  }
+
+  /* ── Date panel ── */
+  .date-panel {
+    width: 100%;
+    border: 1px solid rgba(201,168,76,.3);
+    border-radius: 3px;
+    padding: 18px 20px;
+    background: linear-gradient(135deg, rgba(201,168,76,.07), rgba(12,40,100,.2));
+    position: relative;
+    margin-bottom: 24px;
+    opacity: 0;
+    animation: revealUp .8s 1s forwards;
+  }
+  .date-panel::before, .date-panel::after {
+    content: '';
+    position: absolute;
+    width: 10px; height: 10px;
+    border-color: var(--gold);
+    border-style: solid;
+  }
+  .date-panel::before { top: -1px; left: -1px; border-width: 2px 0 0 2px; }
+  .date-panel::after  { bottom: -1px; right: -1px; border-width: 0 2px 2px 0; }
+
+  .date-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    margin-bottom: 6px;
+  }
+  .date-val {
+    font-family: 'Cinzel', serif;
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--gold-light);
+    letter-spacing: .1em;
+  }
+  .date-sep {
+    width: 1px; height: 20px;
+    background: rgba(201,168,76,.4);
+  }
+  .time-val {
+    font-size: .7rem;
+    font-weight: 500;
+    letter-spacing: .2em;
+    color: var(--silver);
+    text-align: center;
+  }
+  .venue-val {
+    font-size: .68rem;
+    letter-spacing: .14em;
+    color: rgba(184,196,216,.7);
+    text-align: center;
+    margin-top: 4px;
+  }
+  .venue-val span { color: var(--white); font-weight: 500; }
+
+  /* ── Countdown ── */
+  .countdown {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    margin-bottom: 28px;
+    opacity: 0;
+    animation: revealUp .8s 1.15s forwards;
+  }
+  .cd-block {
+    display: flex; flex-direction: column; align-items: center;
+    min-width: 58px;
+  }
+  .cd-box {
+    width: 58px; height: 54px;
+    border: 1px solid rgba(201,168,76,.35);
+    background: linear-gradient(160deg, rgba(201,168,76,.08), rgba(5,17,42,.6));
+    border-radius: 4px;
+    display: flex; align-items: center; justify-content: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .cd-box::after {
+    content: '';
+    position: absolute;
+    left: 0; top: 50%;
+    width: 100%; height: 1px;
+    background: rgba(201,168,76,.15);
+  }
+  .cd-num {
+    font-family: 'Cinzel', serif;
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--gold-light);
+    line-height: 1;
+    letter-spacing: .05em;
+  }
+  .cd-lbl {
+    font-size: .48rem;
+    letter-spacing: .2em;
+    color: rgba(184,196,216,.55);
+    text-transform: uppercase;
+    margin-top: 5px;
+  }
+  .cd-colon {
+    font-family: 'Cinzel', serif;
+    font-size: 1.4rem;
+    color: rgba(201,168,76,.4);
+    align-self: flex-start;
+    padding-top: 12px;
+    animation: blink 1s step-end infinite;
+  }
+  @keyframes blink { 50% { opacity: 0; } }
+
+  /* ── Section head ── */
+  .sec-head {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    margin-bottom: 14px;
+    opacity: 0;
+  }
+  .sec-head .sh-line {
+    flex: 1; height: 1px;
+    background: linear-gradient(90deg, rgba(201,168,76,.5), transparent);
+  }
+  .sec-head .sh-label {
+    font-size: .58rem;
+    letter-spacing: .25em;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-weight: 600;
+  }
+  .sec-head.rev .sh-line { background: linear-gradient(90deg, transparent, rgba(201,168,76,.5)); }
+
+  /* ── Speakers ── */
+  .speakers-wrap {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 26px;
+  }
+
+  .speaker-row {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 13px 16px;
+    border: 1px solid rgba(201,168,76,.15);
+    border-left: 2px solid rgba(201,168,76,.5);
+    border-radius: 3px;
+    background: linear-gradient(95deg, rgba(201,168,76,.05), rgba(5,17,42,.4));
+    opacity: 0;
+    transform: translateX(-18px);
+    transition: border-color .3s, background .3s;
+  }
+  .speaker-row:hover {
+    border-left-color: var(--gold);
+    background: linear-gradient(95deg, rgba(201,168,76,.1), rgba(5,17,42,.5));
+  }
+  .sp-avatar {
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    border: 1px solid rgba(201,168,76,.4);
+    background: linear-gradient(135deg, var(--navy-light), var(--navy-mid));
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Cinzel', serif;
+    font-size: .75rem;
+    color: var(--gold-light);
+    flex-shrink: 0;
+  }
+  .sp-info { flex: 1; min-width: 0; }
+  .sp-name {
+    font-size: .78rem;
+    font-weight: 600;
+    color: var(--white);
+    letter-spacing: .04em;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .sp-role {
+    font-size: .6rem;
+    color: rgba(184,196,216,.65);
+    letter-spacing: .06em;
+    margin-top: 2px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .sp-org {
+    font-size: .58rem;
+    color: var(--gold);
+    letter-spacing: .08em;
+    margin-top: 1px;
+  }
+
+  /* stagger speakers */
+  .speaker-row:nth-child(1) { animation: slideIn .6s 1.4s forwards; }
+  .speaker-row:nth-child(2) { animation: slideIn .6s 1.5s forwards; }
+  .speaker-row:nth-child(3) { animation: slideIn .6s 1.6s forwards; }
+  .speaker-row:nth-child(4) { animation: slideIn .6s 1.7s forwards; }
+  .speaker-row:nth-child(5) { animation: slideIn .6s 1.8s forwards; }
+
+  /* ── Events ── */
+  .events-wrap {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 9px;
+    margin-bottom: 32px;
+  }
+  .event-tile {
+    border: 1px solid rgba(201,168,76,.2);
+    border-radius: 4px;
+    padding: 13px 12px;
+    text-align: center;
+    background: linear-gradient(145deg, rgba(201,168,76,.05), rgba(5,17,42,.5));
+    position: relative;
+    overflow: hidden;
+    opacity: 0;
+    transition: border-color .3s, transform .3s;
+  }
+  .event-tile::before {
+    content: '';
+    position: absolute;
+    top: 0; left: -100%;
+    width: 100%; height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(201,168,76,.08), transparent);
+    transition: left .5s;
+  }
+  .event-tile:hover::before { left: 100%; }
+  .event-tile:hover { border-color: rgba(201,168,76,.5); transform: translateY(-2px); }
+  .event-tile.full-w { grid-column: 1 / -1; }
+  .et-icon { font-size: 1.1rem; margin-bottom: 5px; }
+  .et-name {
+    font-size: .68rem;
+    font-weight: 600;
+    letter-spacing: .1em;
+    color: var(--white);
+    text-transform: uppercase;
+  }
+
+  .event-tile:nth-child(1) { animation: scaleIn .5s 2s forwards; }
+  .event-tile:nth-child(2) { animation: scaleIn .5s 2.1s forwards; }
+  .event-tile:nth-child(3) { animation: scaleIn .5s 2.2s forwards; }
+  .event-tile:nth-child(4) { animation: scaleIn .5s 2.3s forwards; }
+  .event-tile:nth-child(5) { animation: scaleIn .5s 2.4s forwards; }
+
+  /* ── Bottom rule ── */
+  .bottom-rule {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+    opacity: 0;
+    animation: revealDown .6s 2.5s forwards;
+  }
+
+  /* ── Footer ── */
+  .footer-info {
+    text-align: center;
+    opacity: 0;
+    animation: revealDown .7s 2.6s forwards;
+  }
+  .footer-url {
+    font-family: 'Cinzel', serif;
+    font-size: .75rem;
+    color: var(--gold-light);
+    letter-spacing: .12em;
+    margin-bottom: 4px;
+  }
+  .footer-toll {
+    font-size: .6rem;
+    letter-spacing: .1em;
+    color: rgba(184,196,216,.55);
+  }
+  .footer-badges {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 6px;
+    margin-top: 14px;
+  }
+  .fb {
+    font-size: .48rem;
+    letter-spacing: .1em;
+    color: rgba(184,196,216,.45);
+    border: 1px solid rgba(184,196,216,.15);
+    border-radius: 2px;
+    padding: 3px 7px;
+    text-transform: uppercase;
+  }
+
+  /* ── Keyframes ── */
+  @keyframes revealDown {
+    from { opacity: 0; transform: translateY(-12px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes revealUp {
+    from { opacity: 0; transform: translateY(18px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes slideIn {
+    from { opacity: 0; transform: translateX(-18px); }
+    to   { opacity: 1; transform: translateX(0); }
+  }
+  @keyframes scaleIn {
+    from { opacity: 0; transform: scale(.88); }
+    to   { opacity: 1; transform: scale(1); }
+  }
+
+  /* sec-head stagger */
+  .sh-speakers { animation: revealDown .6s 1.3s forwards; }
+  .sh-events   { animation: revealDown .6s 1.95s forwards; }
+</style>
+</head>
+<body>
+<div class="phone-frame">
+  <div class="bg-gradient"></div>
+
+  <!-- Geometric lines SVG -->
+  <div class="geo-lines">
+    <svg viewBox="0 0 420 900" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+      <line x1="0" y1="180" x2="420" y2="180" stroke="#c9a84c" stroke-width=".5"/>
+      <line x1="0" y1="182" x2="420" y2="182" stroke="#c9a84c" stroke-width=".2"/>
+      <line x1="380" y1="0" x2="380" y2="900" stroke="#c9a84c" stroke-width=".4"/>
+      <line x1="40" y1="0" x2="40" y2="900" stroke="#c9a84c" stroke-width=".4"/>
+      <polygon points="210,30 235,60 210,90 185,60" fill="none" stroke="#c9a84c" stroke-width=".8"/>
+      <circle cx="210" cy="60" r="6" fill="none" stroke="#c9a84c" stroke-width=".6"/>
+      <line x1="185" y1="60" x2="40" y2="60" stroke="#c9a84c" stroke-width=".3"/>
+      <line x1="235" y1="60" x2="380" y2="60" stroke="#c9a84c" stroke-width=".3"/>
+      <line x1="0" y1="720" x2="420" y2="720" stroke="#c9a84c" stroke-width=".5"/>
+      <circle cx="40" cy="720" r="4" fill="none" stroke="#c9a84c" stroke-width=".6"/>
+      <circle cx="380" cy="720" r="4" fill="none" stroke="#c9a84c" stroke-width=".6"/>
+    </svg>
+  </div>
+
+  <div class="shimmer-sweep"></div>
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+  <div class="orb orb-3"></div>
+
+  <div class="content">
+
+    <!-- Top rule -->
+    <div class="top-rule">
+      <div class="rule-line"></div>
+      <div class="rule-diamond"></div>
+      <div class="rule-line"></div>
+    </div>
+
+    <!-- Logo -->
+    <div class="logo-block">
+      <div class="logo-emblem">
+        <div class="emblem-circle">HITS</div>
+        <div>
+          <div class="logo-name">HINDUSTAN</div>
+          <div class="logo-sub">INSTITUTE OF TECHNOLOGY &amp; SCIENCE</div>
+          <div class="logo-deemed">(DEEMED TO BE UNIVERSITY)</div>
+        </div>
+        <div class="badge-40">
+          <span class="bnum">40</span>
+          <span class="blbl">YEARS</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="dept-name">Department of Intelligent Systems<br>&amp; Cybersecurity</div>
+
+    <p class="presents" style="font-family:'Cormorant Garamond',serif;font-style:italic">— Presents —</p>
+
+    <!-- Gold divider -->
+    <div class="gold-divider">
+      <div class="gd-line"></div>
+      <div class="gd-center">
+        <div class="gd-dot"></div>
+        <div class="gd-big"></div>
+        <div class="gd-dot"></div>
+      </div>
+      <div class="gd-line rev"></div>
+    </div>
+
+    <!-- Title -->
+    <div class="main-title">IBM ICE DAY</div>
+    <div class="main-subtitle">Unlocking &nbsp; Innovation</div>
+
+    <!-- Date panel -->
+    <div class="date-panel">
+      <div class="date-row">
+        <div class="date-val">1 – 2 APRIL</div>
+        <div class="date-sep"></div>
+        <div class="date-val">2026</div>
+      </div>
+      <div class="time-val">10:00 AM — 04:00 PM</div>
+      <div class="venue-val">Venue: <span>Andromeda Lecture Theatre</span></div>
+    </div>
+
+    <!-- Countdown -->
+    <div class="countdown" id="countdown">
+      <div class="cd-block">
+        <div class="cd-box"><span class="cd-num" id="cd-d">--</span></div>
+        <div class="cd-lbl">Days</div>
+      </div>
+      <div class="cd-colon">:</div>
+      <div class="cd-block">
+        <div class="cd-box"><span class="cd-num" id="cd-h">--</span></div>
+        <div class="cd-lbl">Hours</div>
+      </div>
+      <div class="cd-colon">:</div>
+      <div class="cd-block">
+        <div class="cd-box"><span class="cd-num" id="cd-m">--</span></div>
+        <div class="cd-lbl">Mins</div>
+      </div>
+      <div class="cd-colon">:</div>
+      <div class="cd-block">
+        <div class="cd-box"><span class="cd-num" id="cd-s">--</span></div>
+        <div class="cd-lbl">Secs</div>
+      </div>
+    </div>
+
+    <!-- Speakers -->
+    <div class="sec-head sh-speakers">
+      <div class="sh-label">Featured Speakers</div>
+      <div class="sh-line"></div>
+    </div>
+
+    <div class="speakers-wrap">
+      <div class="speaker-row">
+        <div class="sp-avatar">AA</div>
+        <div class="sp-info">
+          <div class="sp-name">Mr. Aravindhan Annamalai</div>
+          <div class="sp-role">Software Development Manager</div>
+          <div class="sp-org">IBM Software Labs, Chennai</div>
+        </div>
+      </div>
+      <div class="speaker-row">
+        <div class="sp-avatar">VS</div>
+        <div class="sp-info">
+          <div class="sp-name">Mr. Viqaruddin Surki</div>
+          <div class="sp-role">ICE Delivery Head</div>
+          <div class="sp-org">ISA, IBM India</div>
+        </div>
+      </div>
+      <div class="speaker-row">
+        <div class="sp-avatar">JP</div>
+        <div class="sp-info">
+          <div class="sp-name">Ms. Jayashree Padmanabhan</div>
+          <div class="sp-role">ICE Delivery &amp; Account Management</div>
+          <div class="sp-org">ISA Expert Labs, IBM India</div>
+        </div>
+      </div>
+      <div class="speaker-row">
+        <div class="sp-avatar">SA</div>
+        <div class="sp-info">
+          <div class="sp-name">Ms. Sangeetha Anand</div>
+          <div class="sp-role">VP of Operations</div>
+          <div class="sp-org">Trans Neuron Technologies (IBM)</div>
+        </div>
+      </div>
+      <div class="speaker-row">
+        <div class="sp-avatar">CP</div>
+        <div class="sp-info">
+          <div class="sp-name">Mr. Chidananda PE</div>
+          <div class="sp-role">ISA Expert Labs, Southern Region Lead</div>
+          <div class="sp-org">IBM India</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Events -->
+    <div class="sec-head rev sh-events">
+      <div class="sh-line rev" style="background:linear-gradient(90deg,transparent,rgba(201,168,76,.5))"></div>
+      <div class="sh-label">Events</div>
+    </div>
+
+    <div class="events-wrap">
+      <div class="event-tile">
+        <div class="et-icon">📋</div>
+        <div class="et-name">Poster<br>Presentation</div>
+      </div>
+      <div class="event-tile">
+        <div class="et-icon">📄</div>
+        <div class="et-name">Paper<br>Presentation</div>
+      </div>
+      <div class="event-tile">
+        <div class="et-icon">💻</div>
+        <div class="et-name">Hackathon</div>
+      </div>
+      <div class="event-tile">
+        <div class="et-icon">🗂️</div>
+        <div class="et-name">Project<br>Presentation</div>
+      </div>
+      <div class="event-tile full-w">
+        <div class="et-icon">💡</div>
+        <div class="et-name">Ideathon</div>
+      </div>
+    </div>
+
+    <!-- Bottom rule -->
+    <div class="bottom-rule">
+      <div class="rule-line"></div>
+      <div class="rule-diamond"></div>
+      <div class="rule-line"></div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer-info">
+      <div class="footer-url">www.hindustanuniv.ac.in</div>
+      <div class="footer-toll">Toll Free: 1800 425 44 38</div>
+      <div class="footer-badges">
+        <span class="fb">NIRF 2025</span>
+        <span class="fb">IET</span>
+        <span class="fb">NBA</span>
+        <span class="fb">THE World Rankings</span>
+        <span class="fb">QS World Rankings</span>
+      </div>
+    </div>
+
+  </div><!-- /content -->
+</div><!-- /phone-frame -->
+
+<script>
+function updateCountdown() {
+  const target = new Date('2026-04-01T10:00:00+05:30');
+  const now = new Date();
+  const diff = target - now;
+  const fmt = n => String(Math.max(0, n)).padStart(2, '0');
+  if (diff <= 0) {
+    ['cd-d','cd-h','cd-m','cd-s'].forEach(id => document.getElementById(id).textContent = '00');
+    return;
+  }
+  document.getElementById('cd-d').textContent = fmt(Math.floor(diff / 86400000));
+  document.getElementById('cd-h').textContent = fmt(Math.floor((diff % 86400000) / 3600000));
+  document.getElementById('cd-m').textContent = fmt(Math.floor((diff % 3600000) / 60000));
+  document.getElementById('cd-s').textContent = fmt(Math.floor((diff % 60000) / 1000));
+}
+updateCountdown();
+setInterval(updateCountdown, 1000);
+</script>
+</body>
+</html>
